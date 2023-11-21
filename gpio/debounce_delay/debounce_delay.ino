@@ -1,5 +1,5 @@
-int inputPin = 10;
-int ledPin = 13;
+int inputPin = 2;
+int ledPin =10;
 int ledValue = LOW;
 const int DELAY_DEBOUNCE = 200;
 

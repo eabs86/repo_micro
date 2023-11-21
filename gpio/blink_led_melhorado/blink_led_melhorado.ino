@@ -1,6 +1,6 @@
 // Declaração das variáveis
 
-int ledPin = 13;
+int ledPin = 10;
 const int DELAY_PERIOD = 500;
 
 void setup() {
