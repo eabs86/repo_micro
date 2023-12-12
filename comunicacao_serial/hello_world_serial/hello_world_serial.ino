@@ -3,6 +3,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Hello, World!"); // Envia a mensagem "Hello, World!" pela porta serial
-  delay(1000); // Espera por 1 segundo
+  Serial.print("AB"); // Envia a mensagem "Hello, World!" pela porta serial
+  delay(50); // Espera por 1 segundo
 }
