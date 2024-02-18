@@ -16,10 +16,11 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  // faz 100 amostras e depois tira a média
   for(int i=0;i<100;i++){
     touch_value = touch_value + touchRead(touch_pin);
   }
-  touch_value = touch_value/100;
+  touch_value = touch_value/100; //media
   Serial.print(touch_value);
   if (touch_value<limiar){
     digitalWrite(led_pin, HIGH);
