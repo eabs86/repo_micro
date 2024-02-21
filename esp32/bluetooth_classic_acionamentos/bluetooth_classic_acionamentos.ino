@@ -44,7 +44,7 @@ delay(20);
 void configuracao()
 {
 Serial.begin(115200);
-SerialBT.begin("DSF_Eletronica_Maker");
+SerialBT.begin("Sistema de Automacao ESP32");
 Serial.println("O dispositivo foi iniciado, agora você pode emparelhá-lo com bluetooth!");
 pinMode(led,OUTPUT);
 pinMode(btn,INPUT);  
