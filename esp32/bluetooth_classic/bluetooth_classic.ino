@@ -4,7 +4,7 @@
 //#define USE_PIN
 const char *pin = "1234"; // Altere para um PIN mais seguro.
 
-String nome_dispositivo = "ESP32-BT-Escravo";
+String nome_dispositivo = "ESP32-BT-Escravo_v2";
 
 // Verifica se o Bluetooth está habilitado
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)

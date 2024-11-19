@@ -1,0 +1,226 @@
+[
+    {
+        "id": "3c907fa3f9f37479",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8e4234e731cce0b8",
+        "type": "mqtt in",
+        "z": "3c907fa3f9f37479",
+        "name": "",
+        "topic": "dados",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "ff3a4c5bf5aa1f3d",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "69f10ab6f0d6d354"
+            ]
+        ]
+    },
+    {
+        "id": "1a1b6af48646ff34",
+        "type": "aedes broker",
+        "z": "3c907fa3f9f37479",
+        "name": "",
+        "mqtt_port": "1885",
+        "mqtt_ws_bind": "port",
+        "mqtt_ws_port": "",
+        "mqtt_ws_path": "",
+        "cert": "",
+        "key": "",
+        "certname": "",
+        "keyname": "",
+        "persistence_bind": "memory",
+        "dburl": "",
+        "usetls": false,
+        "x": 150,
+        "y": 60,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "69f10ab6f0d6d354",
+        "type": "function",
+        "z": "3c907fa3f9f37479",
+        "name": "Estruturacao_dados",
+        "func": "let dt = msg.payload.datetime;  // Extraído diretamente do JSON\nlet tensao = msg.payload.tensao;\nlet temperatura = msg.payload.temperatura;\nlet umidade = msg.payload.umidade;\nlet luminosidade = msg.payload.luminosidade;\n\n// Estruturar o novo payload\n//msg.topic = \"INSERT INTO sensor_data (datetime, tensao, temperatura, umidade, luminosidade) VALUES ($1, $2, $3, $4, $5)\";\nmsg.params = [dt, tensao, temperatura, umidade, luminosidade];\n\n// Estruturar o payload original para rastreio\nmsg.originalPayload = {\n    dt: dt,\n    tensao: tensao,\n    temperatura: temperatura,\n    umidade: umidade,\n    luminosidade: luminosidade\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "a0d8290b1d13ff85",
+                "be92216b1f858a76"
+            ]
+        ]
+    },
+    {
+        "id": "a0d8290b1d13ff85",
+        "type": "debug",
+        "z": "3c907fa3f9f37479",
+        "name": "debug 94",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "016e5538aea00dbb",
+        "type": "inject",
+        "z": "3c907fa3f9f37479",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 800,
+        "y": 260,
+        "wires": [
+            [
+                "b0d31c2c8a50a8ea"
+            ]
+        ]
+    },
+    {
+        "id": "b0d31c2c8a50a8ea",
+        "type": "postgresql",
+        "z": "3c907fa3f9f37479",
+        "name": "",
+        "query": "SELECT * FROM sep.dados;",
+        "postgreSQLConfig": "38f517e2df76f71e",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 970,
+        "y": 260,
+        "wires": [
+            [
+                "2430ef3e2e44223c"
+            ]
+        ]
+    },
+    {
+        "id": "2430ef3e2e44223c",
+        "type": "debug",
+        "z": "3c907fa3f9f37479",
+        "name": "debug 95",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1160,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "be92216b1f858a76",
+        "type": "postgresql",
+        "z": "3c907fa3f9f37479",
+        "name": "",
+        "query": "INSERT INTO sep.dados (dt, tensao, temperatura, umidade,luminosidade) VALUES ($1, $2, $3, $4, $5)",
+        "postgreSQLConfig": "38f517e2df76f71e",
+        "split": false,
+        "rowsPerMsg": 1,
+        "outputs": 1,
+        "x": 750,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff3a4c5bf5aa1f3d",
+        "type": "mqtt-broker",
+        "name": "SEP",
+        "broker": "192.168.1.16",
+        "port": "1885",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "38f517e2df76f71e",
+        "type": "postgreSQLConfig",
+        "name": "",
+        "host": "127.0.0.1",
+        "hostFieldType": "str",
+        "port": "5432",
+        "portFieldType": "num",
+        "database": "postgres",
+        "databaseFieldType": "str",
+        "ssl": "false",
+        "sslFieldType": "bool",
+        "applicationName": "",
+        "applicationNameType": "str",
+        "max": "10",
+        "maxFieldType": "num",
+        "idle": "1000",
+        "idleFieldType": "num",
+        "connectionTimeout": "10000",
+        "connectionTimeoutFieldType": "num",
+        "user": "postgres",
+        "userFieldType": "str",
+        "password": "12345",
+        "passwordFieldType": "str"
+    }
+]
