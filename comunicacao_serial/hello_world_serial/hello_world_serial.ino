@@ -1,8 +1,27 @@
+
+#define LED 4
+
+char ligar_led = 0;
 void setup() {
-  Serial.begin(9600); // Inicializa a porta serial com a taxa de transmissão de 9600 bps
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(LED,OUTPUT);
+  digitalWrite(LED,LOW);
+
 }
 
 void loop() {
-  Serial.print("AB"); // Envia a mensagem "Hello, World!" pela porta serial
-  delay(50); // Espera por 1 segundo
+  // put your main code here, to run repeatedly:
+  if (Serial.available() > 0) {
+    ligar_led = Serial.read();
+    if (ligar_led == 'l' || ligar_led == 'L') {
+      digitalWrite(LED, HIGH);
+    }
+    else if (ligar_led == 'd' || ligar_led == 'D') {
+      digitalWrite(LED, LOW);
+    }
+    else {
+      Serial.println("Comando inválido: Digite l ou L para ligar o LED, e d ou D para desligar o LED");
+    }
+  }
 }

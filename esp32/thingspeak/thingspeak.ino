@@ -11,7 +11,7 @@ const char* password = "REPLACE_WITH_YOUR_PASSWORD";   // your network password
 
 WiFiClient  client;
 
-unsigned long myChannelNumber = X;
+unsigned long myChannelNumber = 12345;
 const char * myWriteAPIKey = "XXXXXXXXXXXXXXXX";
 
 
@@ -22,12 +22,12 @@ unsigned long timerDelay = 30000;
 
 void setup() {
   Serial.begin(115200);
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
+  // WiFi.mode(WIFI_STA);
+  // WiFi.begin(ssid, password);
+  // while (WiFi.status() != WL_CONNECTED) {
+  //   delay(500);
+  //   Serial.print(".");
+  // }
   ThingSpeak.begin(client);
 }
 
@@ -51,7 +51,7 @@ void loop() {
     ThingSpeak.setField(1, analogValue);
     ThingSpeak.setField(2, digitalValue);
 
-    ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
+    int x = ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
 
     if(x == 200){
       Serial.println("Channel update successful.");
