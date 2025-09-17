@@ -4,9 +4,9 @@
 #include <time.h>
 
 // Configurações do WiFi e MQTT
-const char* ssid = "SUA_REDE"; // Nome do ponto de acesso
-const char* password = "SENHA_DA_REDE"; // Senha do ponto de acesso
-const char* mqtt_server = "SEU_IP"; // Usando um broker público como exemplo
+const char* ssid = "nome_rede"; // Nome do ponto de acesso
+const char* password = "senha_rede"; // Senha do ponto de acesso
+const char* mqtt_server = "ip_do_computador"; // Usando um broker público como exemplo
 const int mqtt_port = 1885; // Porta padrão MQTT
 
 // Tópico MQTT para publicar os dados
